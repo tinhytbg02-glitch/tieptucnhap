@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Health Report</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f2f4f7;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #fff;
+            padding: 14px 0;
+            text-align: center;
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .menu {
+            position: absolute;
+            left: 15px;
+            top: 14px;
+            width: 28px;
+        }
+
+        .menu div {
+            height: 4px;
+            background: #49bcd3;
+            margin: 5px 0;
+            border-radius: 2px;
+        }
+
+        .logo {
+            font-size: 18px;
+            color: #6c78a0;
+            font-weight: 700;
+        }
+
+        /* INFO */
+
+        .info {
+            width: 210mm;
+            margin: 15px auto;
+            border: 3px solid #49bcd3;
+            background: #fff;
+            padding: 14px;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 15px;
+        }
+
+        .item {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .item b {
+            display: block;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .value {
+            color: #1e88e5;
+            font-weight: 700;
+        }
+
+        /* PDF BUTTON */
+
+        .pdf {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background: #e53935;
+            color: #fff;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* PDF AREA */
+
+        #content {
+            width: 210mm;
+            margin: auto;
+            background: #fff;
+        }
+
+        /* PAGE */
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .page-break {
+            break-after: page;
+            page-break-after: always;
+        }
+
+        /* IMAGES */
+
+        .full-img {
+            width: 210mm;
+            display: block;
+        }
+
+        .img-3 {
+            width: 195mm;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* TEXT */
+
+        .text {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 12px;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+
+        /* PREVENT CUT */
+
+        img {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* PRINT */
+
+        @media print {
+
+            body {
+                background: #fff;
+            }
+
+            .header,
+            .info,
+            .pdf {
+                display: none !important;
+            }
+
+            .page {
+                margin: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="menu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="logo">
+            FATIMA HOSPITAL
+        </div>
+
+    </div>
+
+    <!-- INFO -->
+
+    <div class="info">
+
+        <div class="grid">
+
+            <div class="item">
+                <b>성명(Name)</b>
+                <div class="value">황반딘</div>
+            </div>
+
+            <div class="item">
+                <b>생년월일(Birth)</b>
+                <div class="value">20020201</div>
+            </div>
+
+            <div class="item">
+                <b>나이/성별(Age/Sex)</b>
+                <div class="value">24 / 남</div>
+            </div>
+
+            <div class="item">
+                <b>검진일(Exam Date)</b>
+                <div class="value">2026년 02월 02일</div>
+            </div>
+
+            <div class="item">
+                <b>등록번호(Chart No.)</b>
+                <div class="value">89110861</div>
+            </div>
+
+        </div>
+
+        <button class="pdf" onclick="savePDF()">
+            PDF 저장
+        </button>
+
+    </div>
+
+    <!-- PDF CONTENT -->
+
+    <div id="content">
+
+        <!-- PAGE 1 -->
+
+        <div class="page page-break">
+
+            <img src="a1.png" class="full-img">
+
+            <div class="text" style="top:95mm;left:105mm;font-size:18px;font-weight:700;">
+                배치 건강진단 개인표
+            </div>
+
+            <div class="text" style="top:112mm;left:70mm;">황반딘</div>
+            <div class="text" style="top:112mm;left:120mm;">황반딘</div>
+            <div class="text" style="top:112mm;left:145mm;">25</div>
+            <div class="text" style="top:112mm;left:160mm;">남</div>
+
+            <div class="text" style="top:117mm;left:90mm;">
+                ㅗㄹ옳ㅎㅁㄶㄴ몸ㅇ허ㅗㅇㅎㅇㄽㄹ여ㅗㅕㅇㅈㅅㄹ옹
+            </div>
+
+            <div class="text" style="top:117mm;left:165mm;">
+                0123456789
+            </div>
+
+            <div class="text" style="top:122mm;left:90mm;">
+                에이치엘디앤아이한라주식회사-이천
+            </div>
+
+            <div class="text" style="top:122mm;left:150mm;">
+                기타 공동 주택 건설업
+            </div>
+
+            <div class="text" style="top:127mm;left:70mm;">철근</div>
+
+            <div class="text" style="top:127mm;left:120mm;">
+                기타철근
+            </div>
+
+            <div class="text" style="top:127mm;left:165mm;">
+                성남
+            </div>
+
+            <div class="text" style="top:132mm;left:80mm;">
+                2026-02-02
+            </div>
+
+            <div class="text" style="top:132mm;left:130mm;">
+                2026-02-02
+            </div>
+
+            <div class="text" style="top:132mm;left:165mm;">
+                8
+            </div>
+
+            <div class="text" style="top:170mm;left:105mm;">
+                (배)소음,산화철분진과흄,자외선,기타광물성분진
+            </div>
+
+            <div class="text" style="top:183mm;left:90mm;">
+                특이 증상 없음
+            </div>
+
+            <div class="text" style="top:197mm;left:60mm;">165</div>
+            <div class="text" style="top:197mm;left:80mm;">70</div>
+            <div class="text" style="top:197mm;left:105mm;">130</div>
+            <div class="text" style="top:197mm;left:120mm;">79</div>
+
+            <div class="text" style="top:194mm;left:150mm;font-size:11px;">
+                흉부방사선검사 (촬영번호 :89110861)
+                <br>
+                판독의사면허 (면허번호 :25722) 김영주
+            </div>
+
+            <div class="text" style="top:205mm;left:150mm;">
+                정상
+            </div>
+
+            <img src="Screenshot 2026-04-29 030757.png" class="full-img">
+
+            <img src="condau.png" style="width:190mm;display:block;margin-left:auto;margin-right:5%;">
+
+        </div>
+
+        <!-- PAGE 2 -->
+
+        <div class="page">
+
+            <img src="ct1.png" class="img-3">
+
+            <img src="ct2.png" class="img-3">
+
+            <img src="ct3.png" class="img-3">
+
+        </div>
+
+    </div>
+
+    <script>
+
+        async function savePDF() {
+
+            const btn = document.querySelector(".pdf");
+
+            btn.style.display = "none";
+
+            const images = document.querySelectorAll("img");
+
+            await Promise.all(
+
+                [...images].map(img => {
+
+                    if (img.complete) return Promise.resolve();
+
+                    return new Promise(resolve => {
+
+                        img.onload = resolve;
+                        img.onerror = resolve;
+
+                    });
+
+                })
+
+            );
+
+            const element = document.getElementById("content");
+
+            html2pdf().set({
+
+                margin: 0,
+
+                filename: "health_report.pdf",
+
+                image: {
+                    type: "jpeg",
+                    quality: 1
+                },
+
+                html2canvas: {
+                    scale: 3,
+                    useCORS: true,
+                    scrollY: 0
+                },
+
+                jsPDF: {
+                    unit: "mm",
+                    format: "a4",
+                    orientation: "portrait"
+                },
+
+                pagebreak: {
+                    mode: ['css', 'legacy']
+                }
+
+            }).from(element).save().finally(() => {
+
+                btn.style.display = "block";
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
